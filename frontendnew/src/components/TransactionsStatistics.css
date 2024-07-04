@@ -1,0 +1,15 @@
+.statistics-box {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .statistics-box p {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  

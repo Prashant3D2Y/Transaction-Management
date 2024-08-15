@@ -1,7 +1,7 @@
 const axios = require('axios');
 const Transaction = require('../model/Transaction');
 
-// Initialize database with external data
+
 exports.initializeDatabase = async (req, res) => {
   try {
     const response = await axios.get('https://s3.amazonaws.com/roxiler.com/product_transaction.json');
@@ -15,7 +15,7 @@ exports.initializeDatabase = async (req, res) => {
   }
 };
 
-// List transactions based on query parameters
+
 exports.listTransactions = async (req, res) => {
   // const { month, page = 1, perPage = 10, search } = req.query;
   const { startDate, endDate, page = 1, perPage = 10, search, minPrice, maxPrice, exactId } = req.query;
@@ -80,7 +80,7 @@ exports.listTransactions = async (req, res) => {
   }
 };
 
-// Calculate statistics for transactions in a given month
+
 exports.getStatistics = async (req, res) => {
   const { month } = req.query;
   const query = {};
@@ -123,7 +123,7 @@ exports.getStatistics = async (req, res) => {
 };
 
 
-// Generate data for bar chart based on price ranges
+
 exports.getBarChart = async (req, res) => {
   const { month } = req.query;
   const query = {};
@@ -147,7 +147,7 @@ exports.getBarChart = async (req, res) => {
       { range: '0-100', count: await Transaction.countDocuments({ ...query, price: { $lte: 100 } }) },
       { range: '101-200', count: await Transaction.countDocuments({ ...query, price: { $gt: 100, $lte: 200 } }) },
       { range: '201-300', count: await Transaction.countDocuments({ ...query, price: { $gt: 200, $lte: 300 } }) },
-      // Add more ranges as needed
+      
     ];
 
     res.status(200).json({ priceRanges });
@@ -157,7 +157,7 @@ exports.getBarChart = async (req, res) => {
   }
 };
 
-// Generate data for pie chart based on categories
+
 exports.getPieChart = async (req, res) => {
   const { month } = req.query;
   const query = {};
@@ -189,7 +189,7 @@ exports.getPieChart = async (req, res) => {
   }
 };
 
-// Fetch combined data from different endpoints
+
 exports.getCombinedData = async (req, res) => {
   const { month } = req.query;
 
@@ -212,17 +212,5 @@ exports.getCombinedData = async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching combined data:', error.message);
-    
-    // Enhance error handling by checking if it's a network issue or response status
-    if (error.response) {
-      // Server responded with a status other than 2xx
-      res.status(error.response.status).json({ message: error.response.data });
-    } else if (error.request) {
-      // Request was made but no response received
-      res.status(500).json({ message: 'No response received from server.' });
-    } else {
-      // Something else caused the error
-      res.status(500).json({ message: 'An error occurred while fetching combined data.' });
-    }
   }  
 };

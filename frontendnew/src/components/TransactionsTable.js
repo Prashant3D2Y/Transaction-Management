@@ -14,7 +14,7 @@ const TransactionsTable = () => {
   const fetchTransactions = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/transactions', {
-        params: { startDate, endDate, page, search: searchText, minPrice, maxPrice }
+        params: { startDate, endDate, page, minPrice, maxPrice }
       });
 
       setTransactions(response.data.transactions);
@@ -26,7 +26,7 @@ const TransactionsTable = () => {
 
   useEffect(() => {
     fetchTransactions();
-  }, [startDate, endDate, page, searchText, minPrice, maxPrice]);
+  }, [startDate, endDate, page, minPrice, maxPrice]);
 
   return (
     <div>

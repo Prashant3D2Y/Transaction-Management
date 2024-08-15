@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes/transactionRoutes');
+const cors = require('cors');
 
 const app = express();
 
@@ -12,6 +13,13 @@ const databaseUser = 'TeamProcessing';
 const databasePassword = 'team123';
 const databaseName = 'KIET-MCA-1stYear';
 const dbLink = `mongodb+srv://${databaseUser}:${databasePassword}@cluster0.rw9cta9.mongodb.net/${databaseName}?retryWrites=true&w=majority`;
+
+app.get('/', (req, res) => {
+  res.send('Hello, Roxiler!');
+});
+
+
+app.use(cors({ origin: 'http://localhost:3000' })); // Allow requests from your frontend
 
 // Connect to MongoDB
 mongoose.connect(dbLink, {

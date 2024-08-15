@@ -1,9 +1,44 @@
 .bar-chart-container {
-    width: 80%;
-    margin: 20px auto;
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+label {
+  font-size: 14px;
+  color: #555;
+  margin-right: 10px;
+}
+
+input[type="month"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .bar-chart-container {
+    padding: 15px;
   }
-  
-  .bar-chart-container h2 {
-    margin-bottom: 20px;
+
+  input[type="month"] {
+    font-size: 12px;
   }
-  
+
+  h2 {
+    font-size: 20px;
+  }
+}

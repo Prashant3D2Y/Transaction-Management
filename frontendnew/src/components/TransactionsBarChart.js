@@ -3,12 +3,13 @@ import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './TransactionsBarChart.css';
 
-const TransactionsBarChart = ({ selectedMonth }) => {
+const TransactionsBarChart = () => {
   const [data, setData] = useState([]);
+  const [startDate, setStartDate] = useState('');
 
   const fetchBarChartData = async () => {
     try {
-      const response = await axios.get(`/api/barChart?month=${selectedMonth}`);
+      const response = await axios.get(`http://localhost:5000/api/barChart`, { params: { month: startDate } });
       setData(response.data.priceRanges);
     } catch (error) {
       console.error('Error fetching bar chart data:', error);
@@ -17,12 +18,20 @@ const TransactionsBarChart = ({ selectedMonth }) => {
 
   useEffect(() => {
     fetchBarChartData();
-  }, [selectedMonth]);
+  }, [startDate]);
 
   return (
-    <div>
-      <h2>Transactions Bar Chart</h2>
-      <ResponsiveContainer width="100%" height={400}>
+    <div style={{marginTop:'100px'}}>
+      <h2 style={{marginTop:'100px'}}>Transactions Bar Chart</h2>
+      <div style={{display: 'flex' , justifyContent: 'center'}}>
+        <label  >Start Date:</label>
+        <input
+          type="month"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+      </div>
+      <ResponsiveContainer width="100%" height={400} style={{marginTop:'100px'}}>
         <BarChart data={data}>
           <XAxis dataKey="range" />
           <YAxis />
